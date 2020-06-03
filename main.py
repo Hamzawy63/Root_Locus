@@ -21,7 +21,7 @@ class Function:
         """the function is assumed to be a function of x """
 
         transformation = standard_transformations + (implicit_application,)
-        self.f = parse_expr(function.replace('-0.0', '0'), transformations=transformation )
+        self.f = parse_expr(function.replace('-0.0', '0'), transformations=transformation)
         self.__x = symbols('x')
 
     def get_root(self):
@@ -163,7 +163,7 @@ def get_intersection_with_img_axis():
 
 
 def plot():
-    #Draw the real locus by changing the values of K
+    # Draw the real locus by changing the values of K
     xs = []
     ys = []
     s = get_funtion_string()
@@ -174,20 +174,57 @@ def plot():
             c = complex(root)
             xs.append(c.real)
             ys.append(c.imag)
-    plt.plot(xs , ys  , 'r*', mew = .1)
+    plt.plot(xs, ys, 'r*', mew=0.05)
 
-
-    #Drawing axis and asymptotes
+    # Drawing axis and asymptotes
     x = get_centroid()
     val = 50
-    plt.plot([val, -val] , [val + abs(x),-(val - abs(x))],'r--' , lw = 0.3)
-    plt.plot([val, -val] , [-(val + abs(x)),(val - abs(x))],'r--' , lw = 0.3 )
+    plt.plot([val, -val], [0, 0], '--', lw=1.1 , color='#BFBFBF')
+    plt.plot([0, 0], [val, -val], '--', lw=1.1 , color='#BFBFBF')
+    plt.plot([val, -val], [val + abs(x), -(val - abs(x))], '--', lw=1.3, color='#BFBFBF')
+    plt.plot([val, -val], [-(val + abs(x)), (val - abs(x))], '--', lw=1.3, color='#BFBFBF')
+
+
+    # draw manually the root locus
+    xs = [-50, -70]
+    ys = [10, 30]
+    plt.plot(xs, ys , color = 'black')
+
+    xs = [-50, -70]
+    ys = [-10, -30]
+    plt.plot(xs, ys ,  color = 'black')
+
+    xs = [-25, 0]
+    ys = [0, 0]
+    plt.plot(xs, ys, color='black')
+
+    x = complex(get_breaking_down_s()[0]).real
+    i = x
+    xs = []
+    ys = []
+    #x = 0.018275 y ^ 2 - 9.1503
+    while(i < 35):
+        xs.append(i)
+        ys.append(sqrt(i - x ) * 6.3)
+        i+= 0.05
+
+    plt.plot(xs , ys , 'k-')
+
+    i = x
+    xs = []
+    ys = []
+    # x = 0.018275 y ^ 2 - 9.1503
+    while (i < 35):
+        xs.append(i)
+        ys.append(-sqrt(i - x) * 6.3)
+
+        i += 0.05
+
+    plt.plot(xs, ys, 'k-')
+
+
     plt.grid()
     plt.show()
-
-    #draw manually the root locus
-
-
 
 print("---------The results  of the program-----")
 print("The equation you enter is ", get_funtion_string())
